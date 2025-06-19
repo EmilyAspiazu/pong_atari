@@ -1,25 +1,39 @@
-body {
-    margin: 0;
-    background: black; /* Fondo negro para el cuerpo de la página */
-    display: flex; /* Usamos flexbox para centrar el contenido */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
-    overflow: hidden; /* Evita barras de desplazamiento */
+/* Estilos para la pantalla de inicio */
+.overlay {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.9); /* Fondo negro semitransparente */
+    width: 100%;
+    height: 100%;
+    z-index: 2; 
+    color: white; /* Color de texto blanco */
+    display: flex; /* Para centrar contenido */
+    flex-direction: column; /* Organiza elementos en columna */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
 }
 
-canvas {
-    border: 3px solid white; /* Un borde blanco visible para el canvas */
-    background-color: black; /* Fondo negro para el área de juego del canvas */
+.overlay h1 {
+    font-size: 3em; /* Tamaño grande */
+    margin-bottom: 20px; /* Separación del botón */
+    color: #c004dd; /* Un color de neón */
+    text-shadow: 0 0 20px #ff00ff; /* Efecto de brillo */
 }
 
-.scoreBoard {
-    position: absolute; /* Para que quede encima del canvas */
-    top: 30px; /* Un poco separado del borde superior */
-    color: white; /* Color blanco para los números */
-    font-size: 2em; /* Tamaño grande para que se vea */
-    width: 100%; /* Para que el texto se pueda centrar */
-    text-align: center; /* Centrar los números horizontalmente */
-    z-index: 1; /* Asegurar que esté por encima del canvas */
-  
+/* Estilos para el botón Jugar */
+button {
+    padding: 10px 30px; /* Espacio interno */
+    font-size: 1.5em; /* Tamaño de texto */
+    cursor: pointer; 
+    border: none; /* Sin borde */
+    background: #00ffff; /* Color de neón */
+    color: black; /* Texto negro */
+    border-radius: 10px; 
+    box-shadow: 0 0 10px #8dd1d1; 
+    transition: transform 0.2s; 
+}
+
+button:hover {
+    transform: scale(1.1); 
 }
