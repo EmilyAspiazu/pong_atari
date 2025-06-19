@@ -6,3 +6,9 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(gameLoop);
 }
+// Función para empezar el juego cuando le de al botón
+function startGame() {
+    document.getElementById("startScreen").style.display = "none";
+    // Ahora si, empezamos el bucle del juego
+    gameLoop();
+}
