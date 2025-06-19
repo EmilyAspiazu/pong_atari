@@ -1,12 +1,14 @@
 body {
-  margin: 0;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    margin: 0;
+    background: black; /* Fondo negro para el cuerpo de la página */
+    display: flex; /* Usamos flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+    overflow: hidden; /* Evita barras de desplazamiento */
 }
 
 canvas {
-  border: 3px solid white;
+    border: 3px solid white; /* Un borde blanco visible para el canvas */
+    background-color: black; /* Fondo negro para el área de juego del canvas */
 }
