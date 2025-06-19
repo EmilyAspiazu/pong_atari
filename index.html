@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <!-- Puse una pantalla para que el juego no empiece de golpe -->
+    <div class="overlay" id="startScreen">
+        <h1>PONG</h1>
+        <button onclick="startGame()">Jugar</button>
+    </div>
+
     <canvas id="gameCanvas" width="800" height="600"></canvas>
 
-    <!-- Nuevo: Contenedor para el marcador de puntos -->
     <div class="scoreBoard">
         <span id="scoreLeft">0</span> - <span id="scoreRight">0</span>
     </div>
