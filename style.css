@@ -12,3 +12,14 @@ canvas {
     border: 3px solid white; /* Un borde blanco visible para el canvas */
     background-color: black; /* Fondo negro para el área de juego del canvas */
 }
+
+.scoreBoard {
+    position: absolute; /* Para que quede encima del canvas */
+    top: 30px; /* Un poco separado del borde superior */
+    color: white; /* Color blanco para los números */
+    font-size: 2em; /* Tamaño grande para que se vea */
+    width: 100%; /* Para que el texto se pueda centrar */
+    text-align: center; /* Centrar los números horizontalmente */
+    z-index: 1; /* Asegurar que esté por encima del canvas */
+  
+}
