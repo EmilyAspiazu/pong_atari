@@ -1,81 +1,116 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
 
-let ball = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    radius: 10,
-    speedX: 5,
-    speedY: 3
-};
+    let ball = {
+        x: canvas.width / 2,     // Posición X inicial (centro horizontal)
+        y: canvas.height / 2,    // Posición Y inicial (centro vertical)
+        radius: 10,              // Radio de la pelota
+        speedX: 5,               // Velocidad horizontal (positiva = derecha, negativa = izquierda)
+        speedY: 3                // Velocidad vertical (positiva = abajo, negativa = arriba)
+    };
 
-let paddleWidth = 10;        // Ancho de las paletas
-let paddleHeight = 100;      // Alto de las paletas
-let leftPaddleY = canvas.height / 2 - paddleHeight / 2; // Posicion Y inicial paleta izquierda
-let rightPaddleY = canvas.height / 2 - paddleHeight / 2; // Posicion Y inicial paleta derecha
-let paddleSpeed = 6;         // Velocidad con la que se mueven las paletas
+    // Variables para las paletas
+    let paddleWidth = 10;        // Ancho de las paletas
+    let paddleHeight = 100;      // Alto de las paletas
+    let leftPaddleY = canvas.height / 2 - paddleHeight / 2;
+    let rightPaddleY = canvas.height / 2 - paddleHeight / 2;
+    let paddleSpeed = 6;         // Velocidad de movimiento de las paletas
 
-let keys = {};
+    // Puntuaciones de los jugadores
+    let scoreLeft = 0;
+    let scoreRight = 0;
 
-document.addEventListener("keydown", e => {
-    keys[e.key] = true; // Guarda la tecla como presionada
-});
+    let keys = {};
 
-document.addEventListener("keyup", e => {
-    keys[e.key] = false; // Guarda la tecla como no presionada
-});
+    document.addEventListener("keydown", e => {
+        keys[e.key] = true;
+    });
+    document.addEventListener("keyup", e => {
+        keys[e.key] = false;
+    });
 
-// Funciones para dibujar una paleta
-function drawPaddle(x, y) {
-    ctx.fillStyle = "#00ffff"; 
-    ctx.fillRect(x, y, paddleWidth, paddleHeight); // Dibuja la paleta como un rectangulo
-}
-
-// Funciones para dibujar la pelota
-function drawBall() {
-    ctx.fillStyle = "#ff00ff"; // Color magenta de la pelota
-    ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fill();
-}
-
-function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-
-    // Para paleta izquierda (teclas 'w' y 's')
-    if (keys["w"] && leftPaddleY > 0) {
-        leftPaddleY -= paddleSpeed;
-    }
-    if (keys["s"] && leftPaddleY < canvas.height - paddleHeight) { // Si presiono 's' y no me salgo por abajo
-        leftPaddleY += paddleSpeed;
+    function drawPaddle(x, y) {
+        ctx.fillStyle = "#00ffff"; // Color cian para las paletas
+        ctx.fillRect(x, y, paddleWidth, paddleHeight); // Dibuja un rectángulo
     }
 
-    // Paleta derecha (teclas 'ArrowUp' y 'ArrowDown' - flechas arriba/abajo)
-    if (keys["ArrowUp"] && rightPaddleY > 0) {
-        rightPaddleY -= paddleSpeed;
+    // Dibuja la pelota en su posición actual
+    function drawBall() {
+        ctx.fillStyle = "#ff00ff"; // Color magenta para la pelota
+        ctx.beginPath(); 
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2); // Dibuja un círculo
+        ctx.fill(); // Rellena el círculo
     }
-    if (keys["ArrowDown"] && rightPaddleY < canvas.height - paddleHeight) { // Si presiono flecha abajo y no me salgo
-        rightPaddleY += paddleSpeed;
+
+    function resetBall() {
+        ball.x = canvas.width / 2; 
+        ball.y = canvas.height / 2; 
+        ball.speedX *= -1; 
     }
 
-    // Movimiento de la pelota
-    ball.x += ball.speedX;
-    ball.y += ball.speedY;
+    function updateGame() { 
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
-    // Rebote de la pelota en el techo y el suelo
-    if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
-        ball.speedY *= -1;
+        // Paleta izquierda (controlada con 'w' y 's')
+        if (keys["w"] && leftPaddleY > 0) { 
+            leftPaddleY -= paddleSpeed;
+        }
+        if (keys["s"] && leftPaddleY < canvas.height - paddleHeight) {
+            leftPaddleY += paddleSpeed;
+        }
+
+        if (keys["ArrowUp"] && rightPaddleY > 0) { 
+            rightPaddleY -= paddleSpeed;
+        }
+        if (keys["ArrowDown"] && rightPaddleY < canvas.height - paddleHeight) {
+            rightPaddleY += paddleSpeed;
+        }
+
+        ball.x += ball.speedX; // Actualiza la posición X de la pelota
+        ball.y += ball.speedY; // Actualiza la posición Y de la pelota
+
+        if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
+            ball.speedY *= -1; 
+        }
+
+        if (
+            ball.x - ball.radius < paddleWidth &&
+            ball.speedX < 0 && 
+            ball.y > leftPaddleY && ball.y < leftPaddleY + paddleHeight
+        ) {
+            ball.speedX *= -1; 
+            ball.x = paddleWidth + ball.radius; 
+            
+        }
+
+        if (
+            ball.x + ball.radius > canvas.width - paddleWidth &&
+            ball.speedX > 0 && 
+            ball.y > rightPaddleY && ball.y < rightPaddleY + paddleHeight
+        ) {
+            ball.speedX *= -1; 
+            ball.x = canvas.width - paddleWidth - ball.radius; 
+        }
+
+      
+        if (ball.x < 0) { 
+            scoreRight++;
+            document.getElementById("scoreRight").textContent = scoreRight; 
+            resetBall(); 
+        }
+        if (ball.x > canvas.width) { 
+            scoreLeft++;
+            document.getElementById("scoreLeft").textContent = scoreLeft; 
+            resetBall(); 
+        }
+
+        drawPaddle(0, leftPaddleY); 
+        drawPaddle(canvas.width - paddleWidth, rightPaddleY); 
+        drawBall();
+
+        requestAnimationFrame(updateGame);    }
+
+    function startGame() {
+        document.getElementById("startScreen").style.display = "none"; 
+        requestAnimationFrame(updateGame); 
     }
-    drawPaddle(0, leftPaddleY); // Dibuja paleta izquierda (posicion X siempre 0)
-    drawPaddle(canvas.width - paddleWidth, rightPaddleY); // 
-
-    drawBall(); // Dibuja la pelota
-
-    requestAnimationFrame(gameLoop); // Pide el siguiente fotograma
-}
-
-// Funciones para empezar el juego
-function startGame() {
-    document.getElementById("startScreen").style.display = "none"; 
-    gameLoop(); 
-}
