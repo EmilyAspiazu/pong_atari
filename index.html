@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ping Pong Game</title>
-    <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-    <div class="overlay" id="startScreen">
-        <h1>PONG</h1>
-        <button onclick="startGame()">Jugar</button>
-    </div>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Ping Pong Game</title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <div class="overlay" id="startScreen">
+            <h1>PINGPONG</h1>
+            <button onclick="startGame()">Jugar</button>
+        </div>
 
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
 
-    <!-- Agregué las paletas de los jugadores -->
-    <div id="leftPaddle" class="paddle"></div>
-    <div id="rightPaddle" class="paddle"></div>
+        <div class="scoreBoard">
+            <span id="scoreLeft">0</span> - <span id="scoreRight">0</span>
+        </div>
 
-    <div class="scoreBoard">
-        <span id="scoreLeft">0</span> - <span id="scoreRight">0</span>
-    </div>
+        <div id="leftPaddle" class="paddle"></div>
+        <div id="rightPaddle" class="paddle"></div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+        <div class="overlay" id="gameOverScreen" style="display:none;">
+            <h1 id="gameOverMessage">Juego Terminado</h1>
+            <button onclick="restartGame()">Volver a Jugar</button>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+    </html>
